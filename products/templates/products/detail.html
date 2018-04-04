@@ -1,0 +1,50 @@
+{% extends "base.html" %} {% block content %} {% comment %} icon and title{% endcomment %}
+<div class="row">
+    <div class="col-2">
+        <img src="{{ product.icon.url }}" class="fluid">
+    </div>
+    <div class="col-10">
+        <a href="{{ product.url }}">
+            <h1>{{ product.title }}</h1>
+        </a>
+    </div>
+</div>
+
+{% comment %} image and upvote {% endcomment %}
+<div class="row">
+    <div class="col-8">
+        <img src="{{ product.image.url }}" class="fluid">
+    </div>
+    <div class="col-4">
+        <a href="javascript:{document.getElementById('upvote').submit()}">
+            <button class="btn btn-primary btn-lg btn-block">
+                <span class="oi oi-caret-top" title="caret right" aria-hidden="true"></span>  
+                Upvote {{ product.votes_total }}
+            </button>
+        </a>
+    </div>
+</div>
+
+{% comment %} hunted by, date {% endcomment %}
+<div class="row">
+    <div class="col-4 pt-2">
+        <h4>Hunted by {{ product.hunter.username }}</h4>
+    </div>
+    <div class="col-4 text-right pt-2">
+        <h4><span class="oi oi-calendar oi-sm" title="calendar" aria-hidden="true"></span> {{ product.pub_date }}</h4>
+    </div>
+</div>
+
+{% comment %} body description {% endcomment %}
+<div class="row">
+    <div class="col-8">
+        <p>{{ product.body }}</p>
+    </div>
+</div>
+
+<form id="upvote" action="{% url 'upvote' product.id %}" method="post">
+    {% csrf_token %}
+    <input type="hidden">
+</form>
+
+{% endblock content %}
